@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Karang Taruna | Dashboard</title>
+<style>
+:root{--navy:#163e64;--gold:#ffc000;--ink:#19334b;--muted:#718096;--bg:#f3f6fa;--white:#fff;--line:#e5ebf2;--green:#24a178;--red:#e46b6b;--shadow:0 12px 30px rgba(22,62,100,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer;border:0}
+.shell{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:100vh}
+.sidebar{background:var(--navy);color:#fff;padding:25px 18px;display:flex;flex-direction:column;gap:25px}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 7px}
+.logo{width:45px;height:45px;border-radius:15px;background:var(--gold);display:grid;place-items:center;color:var(--navy);font-weight:900;font-size:20px;box-shadow:0 7px 18px #102f4b}
+.brand b{display:block;font-size:15px;letter-spacing:.2px}.brand small{color:#c5d4e2;font-size:11px}
+.navlabel{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#a9bfd3;padding:0 12px;margin-bottom:8px}
+.nav{display:grid;gap:7px}.nav a{display:flex;align-items:center;gap:12px;padding:12px 13px;color:#d7e2ed;text-decoration:none;border-radius:12px;font-size:13px}
+.nav a.active,.nav a:hover{background:#ffffff18;color:#fff}.nav a.active{box-shadow:inset 3px 0 var(--gold)}.navicon{width:20px;text-align:center;font-size:17px}
+.sidebottom{margin-top:auto;border:1px solid #ffffff24;border-radius:16px;padding:15px;background:#ffffff0b}.sidebottom strong{font-size:12px;display:block}.sidebottom p{font-size:11px;color:#c5d4e2;margin:5px 0 12px}.sidebottom .tiny{background:var(--gold);color:var(--navy);border-radius:8px;padding:8px 10px;font-weight:800;font-size:11px}
+.main{min-width:0;padding:28px 34px 38px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:28px}
+.crumb{font-size:12px;color:var(--muted)}.crumb b{color:var(--navy)}h1{font-size:26px;line-height:1.2;margin:6px 0 0;color:var(--navy);letter-spacing:-.5px}
+.topright{display:flex;align-items:center;gap:12px}.datechip{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;color:#5e7185;font-size:12px}.profile{display:flex;align-items:center;gap:9px}.avatar{width:39px;height:39px;border-radius:13px;background:#e3edf7;color:var(--navy);display:grid;place-items:center;font-weight:800}.profile span{display:block;font-size:12px;font-weight:800}.profile small{display:block;color:var(--muted);font-size:10px}
+.hero{position:relative;overflow:hidden;background:linear-gradient(112deg,#163e64 0%,#1d527f 75%,#24628c 100%);color:white;border-radius:22px;padding:26px 30px;margin-bottom:22px;min-height:165px;box-shadow:var(--shadow)}
+.hero:before{content:"";position:absolute;width:260px;height:260px;border:34px solid #ffffff0b;border-radius:50%;right:7%;top:-100px}.hero:after{content:"";position:absolute;width:170px;height:170px;background:#ffc00018;border-radius:50%;right:16%;bottom:-115px}
+.hero-content{position:relative;z-index:1;max-width:570px}.eyebrow{display:inline-flex;align-items:center;gap:7px;color:#ffe28a;font-size:11px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase}.dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.hero h2{font-size:24px;line-height:1.25;margin:10px 0 8px;max-width:500px}.hero p{margin:0;color:#d3e2ef;font-size:13px;max-width:510px}.hero-art{position:absolute;right:35px;top:24px;width:160px;height:125px;z-index:1}
+.gridstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:22px}
+.stat{background:#fff;border:1px solid #edf1f6;border-radius:18px;padding:18px 19px;box-shadow:0 6px 18px #163e6406;min-width:0}
+.stathead{display:flex;justify-content:space-between;align-items:center;color:#718096;font-size:12px}.staticon{width:36px;height:36px;border-radius:12px;background:#edf4fb;color:var(--navy);display:grid;place-items:center;font-size:17px}.staticon.gold{background:#fff5d4;color:#9a7200}.staticon.green{background:#e4f7ef;color:#21815e}.staticon.pink{background:#fff0ef;color:#c75d5d}
+.statnum{font-size:30px;font-weight:850;letter-spacing:-1px;color:var(--navy);margin:10px 0 2px}.statfoot{font-size:11px;color:var(--muted)}.statfoot b{color:var(--green)}
+.contentgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;margin-bottom:20px}
+.panel{background:#fff;border:1px solid #edf1f6;border-radius:18px;padding:21px;box-shadow:0 6px 18px #163e6405;min-width:0}
+.panelhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}.panelhead h3{font-size:15px;color:var(--navy);margin:0}.panelhead p{font-size:11px;color:var(--muted);margin:4px 0 0}.pill{font-size:10px;background:#f0f5fa;color:#58718a;border-radius:20px;padding:6px 10px;white-space:nowrap}
+.genderwrap{display:flex;align-items:center;gap:25px;padding:8px 5px 10px}.donut{width:145px;height:145px;border-radius:50%;background:conic-gradient(var(--navy) 0 60%,var(--gold) 60% 100%);position:relative;flex:none;display:grid;place-items:center}.donut:after{content:"";position:absolute;width:91px;height:91px;border-radius:50%;background:#fff}.donutcenter{position:relative;z-index:1;text-align:center}.donutcenter b{display:block;font-size:26px;color:var(--navy);line-height:1}.donutcenter small{font-size:10px;color:var(--muted)}
+.legend{display:grid;gap:14px;flex:1}.legendrow{display:flex;justify-content:space-between;gap:10px;font-size:12px}.legendlabel{display:flex;align-items:center;gap:8px;color:#6c7e91}.legendrow b{color:var(--navy)}.swatch{width:9px;height:9px;border-radius:3px;background:var(--navy)}.swatch.gold{background:var(--gold)}
+.chartbox{height:135px;display:flex;align-items:flex-end;gap:12px;padding:5px 8px 0;border-bottom:1px solid var(--line);position:relative}.barcol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:8px}.bar{width:70%;max-width:30px;border-radius:7px 7px 3px 3px;background:#d9e7f4;position:relative;min-height:8px}.bar.highlight{background:var(--gold)}.barlabel{font-size:10px;color:#8a9aab;margin-bottom:-22px;transform:translateY(22px)}.chartfoot{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;margin-top:25px}
+.tablepanel{margin-bottom:20px}.tablehead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.tablehead h3{margin:0;font-size:15px;color:var(--navy)}.actions{display:flex;gap:8px}.btn{border-radius:10px;padding:10px 13px;font-size:11px;font-weight:800}.btn.primary{background:var(--navy);color:#fff}.btn.yellow{background:var(--gold);color:var(--navy)}.btn.light{background:#f0f5fa;color:var(--navy)}
+.search{border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:210px;max-width:100%;font-size:12px;outline:none}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:600px}th{text-align:left;font-size:10px;letter-spacing:.4px;text-transform:uppercase;color:#8a9aab;background:#f8fafc;padding:12px}td{padding:13px 12px;border-bottom:1px solid #edf1f6;font-size:12px;color:#52677c}tbody tr:last-child td{border-bottom:0}.membername{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--navy)}.miniavatar{width:32px;height:32px;border-radius:10px;background:#eaf1f8;display:grid;place-items:center;color:var(--navy);font-size:11px;font-weight:900}.badge{display:inline-block;border-radius:20px;padding:5px 9px;font-size:10px;font-weight:800;background:#e7f7ef;color:#24815e}.badge.female{background:#fff4d4;color:#9a7200}.badge.inactive{background:#f2f4f7;color:#7a8794}
+.lowergrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.activity{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid #edf1f6}.activity:last-child{border-bottom:0}.activityicon{width:34px;height:34px;border-radius:11px;background:#fff5d5;color:#9a7200;display:grid;place-items:center;flex:none}.activity b{display:block;font-size:12px;color:var(--navy)}.activity small{font-size:10px;color:var(--muted)}
+.quicklinks{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.quick{border:1px solid var(--line);border-radius:13px;padding:14px;text-decoration:none;color:var(--navy);display:flex;align-items:center;gap:10px;background:#fff}.quick:hover{border-color:#d2a300;background:#fffdf5}.quickicon{width:34px;height:34px;border-radius:10px;background:#edf4fb;display:grid;place-items:center}.quick b{font-size:11px}.quick small{display:block;color:var(--muted);font-size:9px}
+footer{text-align:center;color:#9aa8b7;font-size:10px;padding:25px 0 0}
+#loginbox{display:none;position:fixed;inset:0;background:#0b223bcc;z-index:10;align-items:center;justify-content:center;padding:20px}#loginbox.show{display:flex}.loginpanel{background:white;border-radius:18px;padding:25px;width:min(380px,100%)}.loginpanel h3{margin:0 0 16px;color:var(--navy)}.loginpanel input{display:block;width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;margin:8px 0}.loginpanel .btn{width:100%;margin-top:8px}.closebtn{float:right;background:#f1f4f8;border-radius:8px;padding:5px 9px;color:var(--navy)}
+#adminforms{display:none;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:18px}#adminforms.show{display:block}.formrow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.formrow input,.formrow select{min-width:0;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:12px}.formrow button{grid-column:1/-1}
+@media(max-width:1100px){.gridstats{grid-template-columns:repeat(2,minmax(0,1fr))}.main{padding:24px}.contentgrid{grid-template-columns:1fr}.hero-art{right:15px;opacity:.7}}
+@media(max-width:780px){.shell{display:block}.sidebar{display:none}.main{padding:18px 14px 90px}.topbar{margin-bottom:18px;align-items:flex-start}.topright{gap:8px}.datechip{display:none}.profile span,.profile small{display:none}h1{font-size:22px}.hero{padding:23px 20px;min-height:180px;border-radius:18px}.hero h2{font-size:21px;max-width:75%}.hero p{font-size:12px;max-width:75%}.hero-art{width:105px;height:95px;right:6px;top:45px;opacity:.55}.gridstats{gap:10px;margin-bottom:15px}.stat{padding:14px;border-radius:15px}.statnum{font-size:25px}.stathead{font-size:10px}.staticon{width:31px;height:31px}.contentgrid{grid-template-columns:1fr;gap:14px}.panel{padding:17px}.genderwrap{gap:18px}.donut{width:120px;height:120px}.donut:after{width:75px;height:75px}.donutcenter b{font-size:22px}.lowergrid{grid-template-columns:1fr;gap:14px}.tablehead{align-items:flex-start;flex-direction:column}.actions{width:100%;flex-wrap:wrap}.search{width:100%}.tablepanel{padding:16px}.quicklinks{grid-template-columns:1fr 1fr}.formrow{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.gridstats{grid-template-columns:1fr 1fr}.stat{padding:12px}.statnum{font-size:23px}.statfoot{font-size:9px}.hero h2{font-size:19px}.hero-art{width:82px;right:0}.genderwrap{flex-direction:column;align-items:flex-start}.legend{width:100%}.quicklinks{grid-template-columns:1fr 1fr}.quick{padding:10px;gap:7px}.quick b{font-size:10px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">KT</div><div><b>Karang Taruna</b><small>Desa Cikarang Kota</small></div></div>
+  <div><div class="navlabel">Menu utama</div><nav class="nav">
+    <a class="active" href="#dashboard"><span class="navicon">▦</span>Dashboard</a>
+    <a href="#members"><span class="navicon">♙</span>Data Anggota</a>
+    <a href="#events"><span class="navicon">▣</span>Kegiatan</a>
+    <a href="#cash"><span class="navicon">◉</span>Kas Organisasi</a>
+  </nav></div>
+  <div><div class="navlabel">Pengelolaan</div><nav class="nav">
+    <a href="#adminforms" id="adminnav"><span class="navicon">⚙</span>Kelola Data</a>
+    <a href="#" id="loginopen"><span class="navicon">⇥</span>Login Pengurus</a>
+  </nav></div>
+  <div class="sidebottom"><strong>✨ Bergerak bersama</strong><p>Kolaborasi pemuda untuk desa yang aktif, kreatif, dan bersinar.</p><button class="tiny" id="logout">Keluar akun</button></div>
+</aside>
+<main class="main" id="dashboard">
+  <div class="topbar"><div><div class="crumb">Portal Organisasi / <b>Dashboard</b></div><h1>Dashboard Keanggotaan</h1></div><div class="topright"><div class="datechip" id="today">📅 Hari ini</div><div class="profile"><div class="avatar">KT</div><div><span>Pengurus</span><small id="status">Mode publik</small></div></div></div></div>
+  <section class="hero"><div class="hero-content"><div class="eyebrow"><span class="dot"></span> Portal Karang Taruna</div><h2>Ruang tumbuh dan berkarya pemuda desa.</h2><p>Kelola informasi anggota, kegiatan, dan kas organisasi dalam satu tempat yang mudah diakses.</p></div>
+  <svg class="hero-art" viewBox="0 0 170 130" fill="none" aria-hidden="true"><circle cx="89" cy="60" r="50" fill="#FFC000" opacity=".17"/><path d="M37 112V77c0-13 10-23 23-23s23 10 23 23v35" stroke="#fff" stroke-width="8" stroke-linecap="round"/><circle cx="60" cy="35" r="18" fill="#FFC000"/><path d="M88 112V65c0-15 11-26 26-26s26 11 26 26v47" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".8"/><circle cx="114" cy="23" r="18" fill="#fff" opacity=".9"/><path d="M99 24l10 10 20-23" stroke="#163E64" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></section>
+  <section class="gridstats">
+    <div class="stat"><div class="stathead">Total Anggota <span class="staticon">♙</span></div><div class="statnum" id="total">0</div><div class="statfoot"><b>●</b> Terdata di organisasi</div></div>
+    <div class="stat"><div class="stathead">Anggota Laki-laki <span class="staticon">♂</span></div><div class="statnum" id="male">0</div><div class="statfoot" id="malepct">0% dari anggota</div></div>
+    <div class="stat"><div class="stathead">Anggota Perempuan <span class="staticon gold">♀</span></div><div class="statnum" id="female">0</div><div class="statfoot" id="femalepct">0% dari anggota</div></div>
+    <div class="stat"><div class="stathead">Kegiatan Terdata <span class="staticon green">▣</span></div><div class="statnum" id="eventcount">0</div><div class="statfoot">Agenda organisasi</div></div>
+  </section>
+  <section class="contentgrid">
+    <div class="panel"><div class="panelhead"><div><h3>Komposisi Anggota</h3><p>Perbandingan anggota berdasarkan jenis kelamin</p></div><span class="pill">Gender</span></div>
+      <div class="genderwrap"><div class="donut" id="donut"><div class="donutcenter"><b id="donutnum">0</b><small>Anggota</small></div></div><div class="legend">
+        <div class="legendrow"><span class="legendlabel"><i class="swatch"></i>Laki-laki</span><b id="malelegend">0 · 0%</b></div>
+        <div class="legendrow"><span class="legendlabel"><i class="swatch gold"></i>Perempuan</span><b id="femalelegend">0 · 0%</b></div>
+        <div class="legendrow"><span class="legendlabel">Total data</span><b id="totallegend">0 anggota</b></div>
+      </div></div>
+    </div>
+  </section>
+  <section class="panel tablepanel" id="members"><div class="tablehead"><div><h3>Daftar Anggota</h3><p style="margin:4px 0 0;color:var(--muted);font-size:11px">Informasi keanggotaan Karang Taruna</p></div><div class="actions"><input class="search" id="search" placeholder="⌕ Cari nama anggota..."><button class="btn yellow" id="addmember">＋ Tambah Anggota</button></div></div>
+    <div id="adminforms"><h3 style="margin:0 0 12px;font-size:14px;color:var(--navy)">Tambah data anggota</h3><div class="formrow"><input id="name" placeholder="Nama lengkap"><input id="address" placeholder="Dusun / alamat"><input id="phone" placeholder="Nomor HP"><select id="gender"><option value="">Jenis kelamin</option><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option></select><input id="role" placeholder="Jabatan"><button class="btn primary" id="save">Simpan anggota</button></div></div>
+    <div class="tablewrap"><table><thead><tr><th>Nama anggota</th><th>Alamat</th><th>Jenis kelamin</th><th>Jabatan</th><th>Status</th><th></th></tr></thead><tbody id="rows"><tr><td colspan="6">Memuat data anggota...</td></tr></tbody></table></div>
+  </section>
+  <section class="lowergrid">
+    <div class="panel" id="events"><div class="panelhead"><div><h3>Kegiatan Terbaru</h3><p>Agenda dan aktivitas organisasi</p></div><span class="pill">Agenda</span></div>
+      <div id="eventform" hidden><div class="formrow"><input id="eventname" placeholder="Nama kegiatan"><input id="eventdate" type="date"><input id="eventplace" placeholder="Lokasi"><button class="btn primary" id="saveevent">Tambah kegiatan</button></div></div><div id="eventlist"><div class="activity"><div class="activityicon">▣</div><div><b>Belum ada kegiatan</b><small>Agenda akan tampil di sini</small></div></div></div>
+    </div>
+    <div class="panel" id="cash"><div class="panelhead"><div><h3>Kas Organisasi</h3><p>Ringkasan pemasukan dan pengeluaran</p></div><span class="pill">Keuangan</span></div>
+      <div style="background:#f3f7fb;border-radius:14px;padding:15px;margin-bottom:12px"><small style="color:var(--muted);font-size:10px">Saldo saat ini</small><div style="font-size:24px;font-weight:850;color:var(--navy)" id="balance">Rp0</div></div>
+      <div id="cashform" hidden><div class="formrow"><input id="cashdate" type="date"><select id="type"><option value="in">Pemasukan</option><option value="out">Pengeluaran</option></select><input id="amount" type="number" placeholder="Nominal"><input id="desc" placeholder="Keterangan"><button class="btn primary" id="savecash">Catat kas</button></div></div><div id="cashlist"><div class="activity"><div class="activityicon">◉</div><div><b>Belum ada transaksi</b><small>Catatan kas akan tampil di sini</small></div></div></div>
+    </div>
+  </section>
+  <footer>Karang Taruna Desa Cikarang Kota · Bersama membangun pemuda yang aktif dan berdampak</footer>
+</main>
+</div>
+<div id="loginbox"><div class="loginpanel"><button class="closebtn" id="loginclose">×</button><h3>Login Pengurus</h3><input id="email" type="email" placeholder="Email pengurus"><input id="password" type="password" placeholder="Password"><button class="btn primary" id="login">Masuk</button><p id="error" style="font-size:11px;color:#c45a5a"></p></div></div>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import{getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import{getFirestore,collection,addDoc,deleteDoc,doc,onSnapshot}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+const firebaseConfig={apiKey:"AIzaSyD8Fpyc5b0f5o1R_RU7oWPS8B1OCKuE2yE",authDomain:"karang-taruna-cikarang-kota.firebaseapp.com",projectId:"karang-taruna-cikarang-kota",appId:"1:1066708515557:web:68d96bf6a734455af8f20c"};
+const $=id=>document.getElementById(id);let auth,db,user=null,admin=false,lists={members:[],events:[],cash:[]},stop=[];
+const safe=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rp=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n||0);
+$('today').textContent='📅 '+new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
+function loginshow(){ $('loginbox').classList.add('show') }function loginhide(){ $('loginbox').classList.remove('show') }
+$('loginopen').onclick=e=>{e.preventDefault();loginshow()};$('loginclose').onclick=loginhide;$('addmember').onclick=()=>{if(!admin){loginshow();return}$('adminforms').classList.toggle('show')};$('adminnav').onclick=e=>{e.preventDefault();if(!admin){loginshow();return}$('adminforms').classList.toggle('show')};
+try{const app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app);onAuthStateChanged(auth,u=>{user=u;admin=false;stop.forEach(f=>f());stop=[];if(u)stop.push(onSnapshot(doc(db,'admins',u.uid),s=>{admin=s.exists();ui()}));['members','events','cash'].forEach(k=>stop.push(onSnapshot(collection(db,k),s=>{lists[k]=s.docs.map(d=>({id:d.id,...d.data()}));render()})));ui()})}catch(e){$('error').textContent='Isi konfigurasi Firebase pada file index.html terlebih dahulu.'}
+function ui(){['adminforms','eventform','cashform'].forEach(id=>$(id).classList.toggle('show',admin&&id==='adminforms'));$('eventform').hidden=!admin;$('cashform').hidden=!admin;$('status').textContent=user?(user.email+(admin?' · Admin':' · akun biasa')):'Mode publik';$('logout').textContent=user?'Keluar akun':'Login pengurus'}
+function render(){
+const m=lists.members,all=m.length,male=m.filter(x=>x.gender==='Laki-laki'||x.gender==='L').length,female=m.filter(x=>x.gender==='Perempuan'||x.gender==='P').length,mp=all?Math.round(male/all*100):0,fp=all?Math.round(female/all*100):0;
+$('total').textContent=all;$('male').textContent=male;$('female').textContent=female;$('eventcount').textContent=lists.events.length;$('malepct').textContent=mp+'% dari anggota';$('femalepct').textContent=fp+'% dari anggota';$('donutnum').textContent=all;$('malelegend').textContent=male+' · '+mp+'%';$('femalelegend').textContent=female+' · '+fp+'%';$('totallegend').textContent=all+' anggota';$('donut').style.background=`conic-gradient(var(--navy) 0 ${mp}%,var(--gold) ${mp}% 100%)`;
+let query=$('search').value.toLowerCase();let filtered=m.filter(x=>(x.name||'').toLowerCase().includes(query));
+$('rows').innerHTML=filtered.length?filtered.map(x=>`<tr><td><div class="membername"><span class="miniavatar">${safe((x.name||'A').trim().slice(0,1).toUpperCase())}</span>${safe(x.name)}</div></td><td>${safe(x.address||'—')}</td><td><span class="badge ${x.gender==='Perempuan'?'female':''}">${safe(x.gender||'Belum diisi')}</span></td><td>${safe(x.role||'Anggota')}</td><td><span class="badge">${safe(x.status||'Aktif')}</span></td><td>${admin?`<button class="btn light" data-del="members" data-id="${x.id}">Hapus</button>`:''}</td></tr>`).join(''):'<tr><td colspan="6">Belum ada data anggota yang cocok.</td></tr>';
+$('eventlist').innerHTML=lists.events.length?lists.events.slice(0,5).map(x=>`<div class="activity"><div class="activityicon">▣</div><div><b>${safe(x.name)}</b><small>${safe(x.date||'Tanggal belum ditentukan')} · ${safe(x.place||'Lokasi belum ditentukan')}</small></div>${admin?`<button class="btn light" data-del="events" data-id="${x.id}">×</button>`:''}</div>`).join(''):'<div class="activity"><div class="activityicon">▣</div><div><b>Belum ada kegiatan</b><small>Agenda akan tampil di sini</small></div></div>';
+let bal=0;lists.cash.forEach(x=>bal+=(x.type==='in'?1:-1)*Number(x.amount));$('balance').textContent=rp(bal);
+$('cashlist').innerHTML=lists.cash.slice(0,4).map(x=>`<div class="activity"><div class="activityicon">${x.type==='in'?'↙':'↗'}</div><div style="flex:1"><b>${safe(x.desc||'Transaksi kas')}</b><small>${safe(x.date||'')}</small></div><b style="color:${x.type==='in'?'#24815e':'#c75d5d'}">${x.type==='in'?'+':'−'}${rp(x.amount)}</b>${admin?`<button class="btn light" data-del="cash" data-id="${x.id}">×</button>`:''}</div>`).join('')||'<div class="activity"><div class="activityicon">◉</div><div><b>Belum ada transaksi</b><small>Catatan kas akan tampil di sini</small></div></div>';
+ui()
+}
+$('search').oninput=render;
+$('login').onclick=()=>signInWithEmailAndPassword(auth,$('email').value,$('password').value).then(loginhide).catch(e=>$('error').textContent=e.message);
+$('logout').onclick=()=>user?signOut(auth):loginshow();
+$('save').onclick=()=>{if(!$('name').value.trim())return alert('Isi nama anggota terlebih dahulu.');addDoc(collection(db,'members'),{name:$('name').value.trim(),address:$('address').value,phone:$('phone').value,gender:$('gender').value,role:$('role').value,status:'Aktif'}).then(()=>{['name','address','phone','gender','role'].forEach(id=>$(id).value='');$('error').textContent='Anggota tersimpan'}).catch(e=>$('error').textContent=e.message)};
+$('saveevent').onclick=()=>addDoc(collection(db,'events'),{name:$('eventname').value,date:$('eventdate').value,place:$('eventplace').value}).catch(e=>$('error').textContent=e.message);
+$('savecash').onclick=()=>addDoc(collection(db,'cash'),{date:$('cashdate').value,type:$('type').value,amount:Number($('amount').value),desc:$('desc').value}).catch(e=>$('error').textContent=e.message);
+document.onclick=e=>{let b=e.target.closest('[data-del]');if(b&&admin&&confirm('Hapus data ini?'))deleteDoc(doc(db,b.dataset.del,b.dataset.id)).catch(x=>$('error').textContent=x.message)};
+</script>
+</body></html>
